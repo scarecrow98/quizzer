@@ -1,4 +1,3 @@
-import { Type } from "typescript";
 
 /**
  * https://stackoverflow.com/questions/69299609/map-array-of-values-to-generic-type-in-typescript

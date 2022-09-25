@@ -2,19 +2,22 @@ import express  from "express";
 import { RouteInfo } from "./decorators";
 import { resolve, join } from 'path';
 import Container from "./container";
+import { authMiddleware } from "./middlewares";
+import { AuthService } from "../services";
 
 export class Application {
-    server: express.Express;
+    public readonly container: Container = new Container();
 
-    port: number;
+    public readonly port: number;
 
-    controllers: any[] = [];
+    private server: express.Express;
 
-    container: Container;
+    private controllers: any[] = [];
 
-    constructor(port: number, container: Container) {
+    private protectedRoutes: string[] = [];
+
+    constructor(port: number) {
         this.port = port;
-        this.container = container;
         this.server = express();
     }
 
@@ -26,6 +29,11 @@ export class Application {
 
     start(callback?: (() => void | undefined)) {
         this.server.listen(this.port, callback);
+    }
+
+    setupMiddlewares() {
+        this.server.use(express.json());
+        this.server.use(authMiddleware(this.container.get(AuthService), this.protectedRoutes));
     }
 
     private setupFallbackRoutes() {
@@ -56,6 +64,10 @@ export class Application {
             routes.forEach(route => {
                 const fullRoute = basePath + route.path;
                 (this.server as any)[route.httpMethod](fullRoute, controllerObject[route.method].bind(controllerObject));
+
+                if (route.auth) {
+                    this.protectedRoutes.push(fullRoute);
+                }
             });
         });
     }

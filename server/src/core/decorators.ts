@@ -1,19 +1,21 @@
-export interface RouteInfo {
-    httpMethod: string;
-    path: string;
-    method: string;
-}
-
 export function Controller(path: string = '/') {
     return function(target: any) {
         Object.defineProperty(target, 'path', { value: path });  
     }
 }
 
-type RequestMappingDecorator = (path: string) => MethodDecorator;
+interface RequestMappingOptions {
+    auth?: boolean
+};
+type RequestMappingDecorator = (path: string, options?: RequestMappingOptions) => MethodDecorator;
+export interface RouteInfo extends RequestMappingOptions {
+    httpMethod: string,
+    path: string,
+    method: string,
+}
 
 const createMappingDecorator = (httpMethod: string): RequestMappingDecorator => {
-    return (path: string) => {
+    return (path: string, options?: RequestMappingOptions) => {
         return function(target: any, key: any) {
             const routesPropDesc = Object.getOwnPropertyDescriptor(target.constructor, 'routes');
 
@@ -22,7 +24,8 @@ const createMappingDecorator = (httpMethod: string): RequestMappingDecorator => 
             routes.push({
                 method: key,
                 httpMethod: httpMethod,
-                path
+                path,
+                ...options
             });
     
             Object.defineProperty(target.constructor, 'routes', {

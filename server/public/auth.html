@@ -1,0 +1,48 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <script src="https://accounts.google.com/gsi/client" async defer></script>
+    <title>Document</title>
+    <script>
+        window.onLogin = function (googleUser) {
+            const token = googleUser.credential;
+            fetch('/auth/verify-token', {
+                method: 'POST',
+                body: JSON.stringify({ token }),
+                headers: {
+                    'Accept': 'application/json',
+                    'Content-Type': 'application/json',
+                }
+            }).then(res => res.text())
+            .then(console.log)
+            .catch(console.log)
+        }
+    </script>
+</head>
+<body style="height: 100vh; width: 100%;">
+    <div style="display: grid; place-items: center; height: 100%">
+
+
+        <div id="g_id_onload"
+            data-client_id="649800251115-nju5d64mc08tjcb8ilvemk8cd6hak64b.apps.googleusercontent.com"
+            data-context="signin"
+            data-ux_mode="popup"
+            data-callback="onLogin"
+            data-auto_prompt="false">
+        </div>
+
+        <div class="g_id_signin"
+            data-type="standard"
+            data-shape="rectangular"
+            data-theme="outline"
+            data-text="continue_with"
+            data-size="large"
+            data-logo_alignment="left">
+        </div>
+
+    </div>
+</body>
+</html>
