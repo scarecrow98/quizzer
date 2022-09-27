@@ -4,6 +4,7 @@ import { resolve, join } from 'path';
 import Container from "./container";
 import { authMiddleware } from "./middlewares";
 import { AuthService } from "../services";
+const cors = require('cors');
 
 export class Application {
     public readonly container: Container = new Container();
@@ -33,6 +34,7 @@ export class Application {
 
     setupMiddlewares() {
         this.server.use(express.json());
+        this.server.use(cors());
         this.server.use(authMiddleware(this.container.get(AuthService), this.protectedRoutes));
     }
 
