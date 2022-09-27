@@ -1,4 +1,5 @@
 import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Quiz } from './quiz.model';
 
 export class User extends Model {
     declare id: number;
@@ -21,10 +22,8 @@ export const initUserModel = (sequelize: Sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
             unique: true
-        },
-        password: {
-            type: DataTypes.STRING,
-            allowNull: false
         }
     }, { sequelize, createdAt: false, updatedAt: false });
+
+    // User.hasMany(Quiz, { foreignKey: 'user_id', sourceKey: 'id' });
 }

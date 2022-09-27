@@ -43,8 +43,7 @@ export class AuthController extends BaseController {
 		if (!user) {
 			user = new User({
 				name,
-				email,
-				password: ''
+				email
 			});
 			await user.save();
 		}
@@ -79,12 +78,4 @@ export class AuthController extends BaseController {
 			data: { user }
 		});
 	}
-
-	@Get('/private', { auth: true })
-	privateMethod(req: AuthenticatedRequest, res: Response) {
-		console.log(req.user);
-
-		res.send('ok');
-	}
-
 }
