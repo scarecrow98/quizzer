@@ -1,5 +1,7 @@
 import { HttpClient } from '@angular/common/http';
 import { Injectable } from '@angular/core';
+import { ApiResponse } from '../core/models/api-response.model';
+import { User } from '../core/models/user.model';
 
 @Injectable()
 export class LoginService {
@@ -7,12 +9,6 @@ export class LoginService {
   constructor(private http: HttpClient) { }
 
   verifyToken(token: string) {
-    return this.http.post<{
-      status: boolean,
-      data?: {
-        user: any,
-        token: string
-      }
-    }>('http://localhost:4000/auth/verify-token', { token });
+    return this.http.post<ApiResponse<{ token: string, user: User }>>('/auth/verify-token', { token });
   }
 }

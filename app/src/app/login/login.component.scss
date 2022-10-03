@@ -1,0 +1,27 @@
+@use '../../variables' as v;
+
+.login-component {
+    height: 100vh;
+    display: grid;
+    place-items: center;
+    background-color: v.$primary;
+
+    & > div {
+        flex-direction: column;
+        display: flex;
+        align-items: center;
+    }
+
+    .login-header {
+        color: v.$font;
+        font-size: 3rem;
+        padding-bottom: 3rem;
+    }
+
+    .login-subheader {
+        color: v.$font;
+        font-size: 2rem;
+        font-weight: lighter;
+        padding-bottom: 3rem;
+    }
+}

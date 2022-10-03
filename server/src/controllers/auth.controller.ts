@@ -59,7 +59,7 @@ export class AuthController extends BaseController {
 		});
 	}
 
-	@Post('/check')
+	@Get('/check')
 	async check(req: Request, res: Response) {
 		const jwt = req.headers.authorization;
 

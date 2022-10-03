@@ -1,0 +1,47 @@
+@use '../../../variables' as v;
+
+.menu-component {
+    background-color: v.$primary-dark;
+    height: 100%;
+    padding: 20px 0px;
+    color: v.$font;
+
+    .menu-title {
+        font-size: 2rem;
+        text-align: center;
+    }
+
+    .menu-profile {
+        text-align: center;
+        margin-top: 2rem;
+
+        h2 {
+            font-size: 1rem;
+            font-weight: 400;
+        }
+        span {
+            font-size: 0.8rem;
+            color: v.$contrast;
+        }
+    }
+
+    .menu-items {
+        list-style-type: none;
+        margin-top: 3rem;
+
+        & > li {
+            padding: 12px 20px;
+            cursor: pointer;
+            
+            &:hover {
+                background-color: v.$contrast;
+            }
+
+            & > a {
+                color: v.$font;
+                text-decoration: none;
+                display: block;
+            }
+        }
+    }
+}

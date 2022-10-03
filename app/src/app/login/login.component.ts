@@ -1,5 +1,7 @@
 import { DOCUMENT } from '@angular/common';
-import { Component, Inject, OnInit } from '@angular/core';
+import { Component, Inject, NgZone, OnInit } from '@angular/core';
+import { Router } from '@angular/router';
+import { LOCAL_STORAGE_KEYS } from '../core/constants';
 import { LoginService } from './login.service';
 
 @Component({
@@ -11,7 +13,9 @@ export class LoginComponent implements OnInit {
 
   constructor(
     @Inject(DOCUMENT) private document: Document,
-    private loginService: LoginService
+    private loginService: LoginService,
+    private router: Router,
+    private zone: NgZone
   ) {
     (window as any).onGoogleAuth = this.onGoogleAuth;
 
@@ -27,8 +31,13 @@ export class LoginComponent implements OnInit {
   }
 
   onGoogleAuth = (googleUser: any) => {
-    this.loginService.verifyToken(googleUser.credential).subscribe(resp => {
-      console.log(resp);
+    this.zone.run(() => {
+      this.loginService.verifyToken(googleUser.credential).subscribe(resp => {
+        if (resp.status) {
+          localStorage.setItem(LOCAL_STORAGE_KEYS.JWT_TOKEN, resp.data!.token);
+          this.router.navigate([ '/dashboard' ]);
+        }
+      });
     });
   }
 

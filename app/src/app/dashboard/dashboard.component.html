@@ -1,0 +1,13 @@
+<div class="dashboard-component">
+    <nav id="dashboard-menu">
+        <app-menu [user]="authService.user$ | async"></app-menu>
+    </nav>
+    <main id="dashboard-content">
+        <div id="header-container">
+            <app-header [title]="headerTitle$ | async"></app-header>
+        </div>
+        <div id="content-container">
+            <router-outlet></router-outlet>
+        </div>
+    </main>
+</div>

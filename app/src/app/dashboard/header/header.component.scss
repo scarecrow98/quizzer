@@ -1,0 +1,14 @@
+@use '../../../variables' as v;
+
+.header-component {
+    display: flex;
+    height: 100%;
+    background-color: v.$primary-dark;
+    align-items: center;
+    padding: 0px 30px;
+
+    h1.header-title {
+        color: v.$font;
+        font-size: 1.2rem;
+    }
+}
