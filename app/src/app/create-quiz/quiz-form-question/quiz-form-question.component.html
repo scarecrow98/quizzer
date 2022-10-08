@@ -1,0 +1,34 @@
+<div class="quiz-form-question-component p-2" [formGroup]="formGroup!">
+    <header class="d-flex align-items-center">
+        <h2>Question #{{ questionNumber! + 1 }}</h2>
+        <button class="action-button" (click)="removeQuestion()">remove</button>
+    </header>
+
+    <div class="form-input mt-3">
+        <label for="">Text of your question</label>
+        <input formControlName="question"/>
+    </div>
+
+    <div class="form-input mt-2">
+        <label for="">Type of the question</label>
+        <div class="form-checkbox">
+            <input type="radio" [id]="'type-text-' + questionNumber" checked value="text" formControlName="type">
+            <label [for]="'type-text-' + questionNumber">Text</label>
+        </div>
+        <div class="form-checkbox">
+            <input type="radio" [id]="'type-numeric-' + questionNumber" value="numeric" formControlName="type">
+            <label [for]="'type-numeric-' + questionNumber">Numeric</label>
+        </div>
+        <div class="form-checkbox">
+            <input type="radio" [id]="'type-choice-' + questionNumber" value="choice" formControlName="type">
+            <label [for]="'type-choice-' + questionNumber">Multiple chioce</label>
+        </div>
+    </div>
+
+    <div class="choice-grid mt-2" *ngIf="formGroup?.get('type')?.value === 'choice'" formArrayName="choices">
+        <div class="form-input" *ngFor="let choice of choiceControls; let i = index" [formGroupName]="i">
+            <label>{{ 'Choice ' + (i + 1) }}</label>
+            <input type="text" [formControl]="choice">
+        </div>
+    </div>
+</div>

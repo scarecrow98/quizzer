@@ -1,1 +1,12 @@
-<p>create-quiz works!</p>
+<div class="create-quiz-component">
+
+    <div class="d-flex align-items-center mb-2">
+        <button class="action-button filled" style="margin-left: auto" (click)="submitForm()">save</button>
+    </div>
+
+    <app-quiz-form [form]="form"></app-quiz-form>
+
+    <button class="mt-3 w-100 action-button filled" type="button" (click)="addQuestion()">
+        Add new question
+    </button>
+</div>

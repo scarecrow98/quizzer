@@ -1,3 +1,4 @@
+@use './variables' as v;
 @import url('https://fonts.googleapis.com/css2?family=Ubuntu:wght@300;400;500&display=swap');
 
 * {
@@ -9,10 +10,153 @@
     font-size: 18px;
 }
 
-html, body {
+html,
+body {
     height: 100vh;
 }
 
+//utility classes
 .d-flex {
     display: flex;
+    
+    .align-items-center {
+        align-items: center;
+    }
+}
+
+.w-100 {
+    width: 100%;
+}
+
+$spacing: 10px;
+@for $i from 1 to 6 {
+    .m-#{$i} {
+        margin: $i * $spacing;
+    }
+
+    .ml-#{$i} {
+        margin-left: $i * $spacing;
+    }
+
+    .mb-#{$i} {
+        margin-bottom: $i * $spacing;
+    }
+
+    .mt-#{$i} {
+        margin-top: $i * $spacing;
+    }
+
+    .mr-#{$i} {
+        padding-right: $i * $spacing;
+    }
+
+    .p-#{$i} {
+        padding: $i * $spacing;
+    }
+
+    .pl-#{$i} {
+        padding-left: $i * $spacing;
+    }
+
+    .pb-#{$i} {
+        padding-bottom: $i * $spacing;
+    }
+
+    .pt-#{$i} {
+        padding-top: $i * $spacing;
+    }
+
+    .pr-#{$i} {
+        padding-right: $i * $spacing;
+    }
+}
+
+
+.form-input {
+    display: flex;
+    flex-direction: column;
+    background-color: v.$primary-dark;
+    padding: 8px 12px;
+    border-radius: 6px;
+    border: 1px solid transparent;
+    transition: box-shadow .1s ease-in-out;
+
+    & > label {
+        color: v.$font;
+        font-weight: lighter;
+    }
+
+    & > input {
+        background-color: transparent;
+        outline: none;
+        border: 0px;
+        padding: 8px 0px;
+        color: v.$font;
+    }
+
+    &:focus-within {
+        box-shadow: 0px 0px 3px 2px v.$contrast;
+    }
+
+    .form-checkbox {
+        margin-top: 14px;
+        padding: 8px;
+        
+        & > label {
+            color: v.$font;
+            font-weight: 500;
+            cursor: pointer;
+            margin-left: 36px;
+            position: relative;
+
+            &::before {
+                content: '';
+                display: block;
+                position: absolute;
+                width: 20px;
+                height: 20px;
+                border-radius: 50%;
+                box-shadow: 0px 0px 0px 1px v.$contrast inset;
+                left: -36px;
+                top: -2px;
+            }
+        }
+
+        & > input[type="radio"] {
+            display: none;
+        }
+
+        & > input[type="radio"]:checked ~ label::before {
+            box-shadow: 0px 0px 0px 6px v.$contrast inset;
+        }
+    }
+}
+
+.action-button {
+    border: 0px;
+    font-size: 1rem;
+    padding: 8px 16px;
+    border-radius: 6px;
+    background: transparent;
+    border: 2px solid v.$contrast;
+    color: v.$contrast;
+    cursor: pointer;
+    text-transform: uppercase;
+
+    &:hover {
+        box-shadow: 0px 0px 8px 1px #0003 inset,
+            0px 3px 12px #0003;
+        color: #fff;
+    }
+
+    &.filled {
+        background-color: v.$contrast;
+        color: #fff;
+
+        &:hover {
+            box-shadow: 0px 3px 12px #0003;
+            background-color: darken(v.$contrast, 8);
+            border-color: darken(v.$contrast, 8);
+        }
+    }
 }
