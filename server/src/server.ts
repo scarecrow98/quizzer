@@ -5,8 +5,8 @@ dotenv.config();
 import { Application, DB } from './core';
 
 //controller
-import { AuthController } from './controllers';
-import { GoogleAuthService, TestService, AuthService } from './services';
+import { AuthController, QuizController } from './controllers';
+import { GoogleAuthService, TestService, AuthService, QuizService } from './services';
 import { initUserModel, User } from './models';
 import { initQuizModel, Quiz } from './models/quiz.model';
 import { initQuizQuestionModel, QuizQuestion } from './models/quiz-question.model';
@@ -23,23 +23,25 @@ const app = new Application(port);
 app.container.register(TestService, new TestService());
 app.container.register(GoogleAuthService, new GoogleAuthService());
 app.container.register(AuthService, new AuthService());
+app.container.register(QuizService, new QuizService());
 
 //enable middlewares
 app.setupMiddlewares();
 
 //register MVC controllers
 app.registerControllers([
-    AuthController
+    AuthController,
+    QuizController
 ]);
 
 //init database models
 initUserModel(DB);
 initQuizModel(DB);
 initQuizQuestionModel(DB);
-User.hasMany(Quiz, { foreignKey: 'user_id', sourceKey: 'id' });
-Quiz.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id' });
-Quiz.hasMany(QuizQuestion, { foreignKey: 'quiz_id', sourceKey: 'id' });
-QuizQuestion.belongsTo(Quiz, { foreignKey: 'quiz_id', targetKey: 'id' });
+User.Quizes = User.hasMany(Quiz, { foreignKey: 'user_id', sourceKey: 'id', as: 'quizes' });
+Quiz.User = Quiz.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id', as: 'user' });
+Quiz.Questions = Quiz.hasMany(QuizQuestion, { foreignKey: 'quiz_id', sourceKey: 'id', as: 'questions' });
+QuizQuestion.Quiz = QuizQuestion.belongsTo(Quiz, { foreignKey: 'quiz_id', targetKey: 'id', as: 'quiz' });
 
 
 

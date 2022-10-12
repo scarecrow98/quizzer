@@ -1,10 +1,12 @@
-import { Model, DataTypes, Sequelize } from 'sequelize';
+import { Model, DataTypes, Sequelize, HasMany } from 'sequelize';
 import { Quiz } from './quiz.model';
 
 export class User extends Model {
     declare id: number;
     public name!: string;
     public email!: string;
+
+    static Quizes: HasMany;
 }
 
 export const initUserModel = (sequelize: Sequelize) => {

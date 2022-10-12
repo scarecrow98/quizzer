@@ -1,5 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
+import { CreateQuizService } from './create-quiz.service';
 
 @Component({
   selector: 'app-create-quiz',
@@ -14,15 +15,40 @@ export class CreateQuizComponent implements OnInit {
     questions: this.fb.array([])
   });
 
-  constructor(private fb: FormBuilder) { }
+  constructor(
+    private fb: FormBuilder,
+    private service: CreateQuizService
+    ) { }
 
   ngOnInit(): void {
     this.addQuestion();
+    this.addQuestion();
+
+    this.form.setValue({
+      title: 'quiz 1',
+      questions: [
+        {
+          question: 'q1',
+          type: 'text',
+          choices: ['', '', '', '']
+        },
+        {
+          question: 'q2',
+          type: 'choice',
+          choices: ['1413', '1231', '564', '1231']
+        }
+      ]
+    });
 
   }
 
   submitForm() {
-    console.log(this.form.value);
+    if (this.form.invalid) {
+      return alert('invalid data'); //todo: other dialog component
+    }
+
+    const data = this.form.value;
+    this.service.createQuiz(data).subscribe();
   }
 
   get questions(): FormArray {

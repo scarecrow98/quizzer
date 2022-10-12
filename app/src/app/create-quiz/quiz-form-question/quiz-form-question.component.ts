@@ -1,10 +1,11 @@
-import { Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
+import { ChangeDetectionStrategy, Component, EventEmitter, Input, OnInit, Output } from '@angular/core';
 import { FormArray, FormControl, FormGroup } from '@angular/forms';
 
 @Component({
   selector: 'app-quiz-form-question',
   templateUrl: './quiz-form-question.component.html',
-  styleUrls: ['./quiz-form-question.component.scss']
+  styleUrls: ['./quiz-form-question.component.scss'],
+  changeDetection: ChangeDetectionStrategy.OnPush
 })
 export class QuizFormQuestionComponent implements OnInit {
 

@@ -5,6 +5,7 @@ import { RouterModule } from '@angular/router';
 import { ReactiveFormsModule } from '@angular/forms';
 import { QuizFormComponent } from './quiz-form/quiz-form.component';
 import { QuizFormQuestionComponent } from './quiz-form-question/quiz-form-question.component';
+import { CreateQuizService } from './create-quiz.service';
 
 
 
@@ -20,6 +21,9 @@ import { QuizFormQuestionComponent } from './quiz-form-question/quiz-form-questi
       { path: '', component: CreateQuizComponent }
     ]),
     ReactiveFormsModule
+  ],
+  providers: [
+    CreateQuizService
   ]
 })
 export class CreateQuizModule { }

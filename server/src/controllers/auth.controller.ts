@@ -1,6 +1,6 @@
 import { Request, Response } from "express";
 import { join, resolve } from "path";
-import { AuthenticatedRequest, BaseController, Controller, Get, Post } from "../core";
+import { BaseController, Controller, Get, Post } from "../core";
 import { User } from "../models";
 import { GoogleAuthService, AuthService } from "../services";
 
