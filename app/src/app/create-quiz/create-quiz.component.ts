@@ -1,6 +1,6 @@
 import { ChangeDetectionStrategy, Component, OnInit } from '@angular/core';
 import { FormArray, FormBuilder, Validators } from '@angular/forms';
-import { CreateQuizService } from './create-quiz.service';
+import { QuizService } from '../core/services/quiz.service';
 
 @Component({
   selector: 'app-create-quiz',
@@ -17,7 +17,7 @@ export class CreateQuizComponent implements OnInit {
 
   constructor(
     private fb: FormBuilder,
-    private service: CreateQuizService
+    private service: QuizService
     ) { }
 
   ngOnInit(): void {

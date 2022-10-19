@@ -38,8 +38,8 @@ app.registerControllers([
 initUserModel(DB);
 initQuizModel(DB);
 initQuizQuestionModel(DB);
-User.Quizes = User.hasMany(Quiz, { foreignKey: 'user_id', sourceKey: 'id', as: 'quizes' });
-Quiz.User = Quiz.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id', as: 'user' });
+User.Quizes = User.hasMany(Quiz, { foreignKey: 'created_by', sourceKey: 'id', as: 'quizes' });
+Quiz.User = Quiz.belongsTo(User, { foreignKey: 'created_by', targetKey: 'id', as: 'user' });
 Quiz.Questions = Quiz.hasMany(QuizQuestion, { foreignKey: 'quiz_id', sourceKey: 'id', as: 'questions' });
 QuizQuestion.Quiz = QuizQuestion.belongsTo(Quiz, { foreignKey: 'quiz_id', targetKey: 'id', as: 'quiz' });
 

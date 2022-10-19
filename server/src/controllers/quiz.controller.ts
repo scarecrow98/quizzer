@@ -1,5 +1,5 @@
 import { Response } from "express";
-import { AuthenticatedRequest, BaseController, Controller, Post } from "../core";
+import { AuthenticatedRequest, BaseController, Controller, Get, Post } from "../core";
 import { QuizService } from "../services";
 
 @Controller('/quiz')
@@ -14,5 +14,12 @@ export class QuizController extends BaseController {
             created: quiz !== null,
             quiz
         });
+    }
+
+    @Get('/list', { auth: true })
+    async list(req: AuthenticatedRequest, res: Response) {
+        const service = this.container.get(QuizService);
+        const quizzes = await service.getUserQuizzes(req.user.id);
+        return res.json(quizzes);
     }
 }

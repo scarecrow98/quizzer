@@ -1,0 +1,11 @@
+<div class="quiz-list-component">
+    <div *ngFor="let quiz of quizzes" class="quiz-list-item">
+        <h3 class="quiz-list-item__title mb-2">{{ quiz.title }}</h3>
+        <time class="quiz-list-item__date mb-1">{{ quiz.created_at | date: 'yyy.MM.dd' }}</time>
+        <span class="quiz-list-item__question-count mb-1">{{ quiz.questions.length }} question(s)</span>
+
+        <div class="d-flex">
+            <button class="action-button" style="margin-left: auto">view</button>
+        </div>
+    </div>
+</div>

@@ -21,4 +21,13 @@ export class QuizService {
         // console.log(quiz);
         return quiz;
     }
+
+    async getUserQuizzes(userId: number): Promise<Quiz[]> {
+        return await Quiz.findAll({
+            where: {
+                created_by: userId
+            },
+            include: [ Quiz.Questions ]
+        });
+    }
 }

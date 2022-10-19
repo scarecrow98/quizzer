@@ -1,0 +1,10 @@
+<div class="my-quizzes-component">
+    <div class="form-input">
+        <!-- <label>Search your quizzes...</label> -->
+        <input type="text" placeholder="Search your quizzes.."/>
+    </div>
+
+    <div class="quiz-list pt-2">
+        <app-quiz-list [quizzes]="(quizzes$ | async)!"></app-quiz-list>
+    </div>
+</div>
