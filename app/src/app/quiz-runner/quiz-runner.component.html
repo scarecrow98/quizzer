@@ -1,0 +1,10 @@
+<div class="quiz-runner-component" *ngIf="quizResult$ | async as quizResult">
+    <h1>Quiz runner</h1>
+    <div *ngIf="quizResult.quiz; else notFound">
+        {{ quizResult.quiz | json }}
+    </div>
+
+    <ng-template #notFound>
+        quiz not found
+    </ng-template>
+</div>

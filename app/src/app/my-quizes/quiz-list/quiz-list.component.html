@@ -4,8 +4,11 @@
         <time class="quiz-list-item__date mb-1">{{ quiz.created_at | date: 'yyy.MM.dd' }}</time>
         <span class="quiz-list-item__question-count mb-1">{{ quiz.questions.length }} question(s)</span>
 
-        <div class="d-flex">
-            <button class="action-button" style="margin-left: auto">view</button>
+        <span class="quiz-list-item__copy-link mt-3 mb-3" (click)="copyLinkToClipboard(quiz.tag)">Copy quiz link</span>
+
+        <div class="d-flex" style="justify-content: end;">
+            <button class="action-button">view</button>
+            <button class="action-button ml-1">edit</button>
         </div>
     </div>
 </div>

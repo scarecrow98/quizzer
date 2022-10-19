@@ -1,4 +1,5 @@
 import { Response } from "express";
+import { auth } from "google-auth-library";
 import { AuthenticatedRequest, BaseController, Controller, Get, Post } from "../core";
 import { QuizService } from "../services";
 
@@ -21,5 +22,17 @@ export class QuizController extends BaseController {
         const service = this.container.get(QuizService);
         const quizzes = await service.getUserQuizzes(req.user.id);
         return res.json(quizzes);
+    }
+
+    @Get('/tag/:tag', { auth: true })
+    async getByTag(req: AuthenticatedRequest, res: Response) {
+        const { tag } = req.params;
+
+        const quiz = await this.container.get(QuizService).getQuizByTag(tag);
+
+        if (quiz) {
+            return res.json(quiz);
+        }
+        return res.sendStatus(404);
     }
 }

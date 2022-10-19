@@ -16,4 +16,9 @@ export class QuizListComponent implements OnInit {
   ngOnInit(): void {
   }
 
+  copyLinkToClipboard(quizTag: string) {
+    const link = `${location.origin}/run-quiz/${quizTag}`;
+    navigator.clipboard.writeText(link);
+  }
+
 }

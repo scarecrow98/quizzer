@@ -8,6 +8,11 @@ const routes: Routes = [
     path: 'dashboard',
     loadChildren: () => import('./dashboard/dashboard.module').then(m => m.DashboardModule),
     canLoad: [ DashboardGuard ]
+  },
+  {
+    path: 'run-quiz',
+    loadChildren: () => import('./quiz-runner/quiz-runner.module').then(m => m.QuizRunnerModule),
+    canLoad: [ DashboardGuard ]
   }
 ];
 

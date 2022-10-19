@@ -27,6 +27,12 @@
             display: block;
         }
 
+        &__copy-link {
+            font-weight: lighter;
+            display: block;
+            &:hover { text-decoration: underline; }
+        }
+
         &:hover {
             box-shadow: 12px 12px 20px 8px #0003;
         }

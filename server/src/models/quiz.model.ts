@@ -24,6 +24,11 @@ export const initQuizModel = (sequelize: Sequelize) => {
             type: DataTypes.STRING,
             allowNull: false,
         },
+        tag: {
+            type: DataTypes.STRING,
+            allowNull: false,
+            unique: true
+        },
         created_by: {
             type: DataTypes.INTEGER,
             allowNull: false,
