@@ -1,10 +1,28 @@
 <div class="quiz-runner-component" *ngIf="quizResult$ | async as quizResult">
-    <h1>Quiz runner</h1>
-    <div *ngIf="quizResult.quiz; else notFound">
-        {{ quizResult.quiz | json }}
+    <div *ngIf="quizResult.quiz as quiz; else notFound" class="quiz-form p-3">
+        <h1 class="quiz-form__title pb-3">{{ quiz.title }}</h1>
+
+        <div class="quiz-form__current-question" *ngIf="currentQuestion$ | async as currentQuestion">
+            <app-question-form
+                [question]="currentQuestion"
+                [questionIndex]="currentIndex"
+                [form]="form"
+                (onSubmit)="submit($event)"></app-question-form>
+        </div>
+
+        <div class="quiz-form__step-buttons">
+            <button class="action-button filled" (click)="advanceQuestionIndex(-1)">
+                PREVIOUS
+            </button>
+            <button class="action-button filled" (click)="advanceQuestionIndex(+1)">
+                NEXT
+            </button>
+        </div>
     </div>
 
     <ng-template #notFound>
-        quiz not found
+        <div class="quiz-not-found">
+            <h1>Quiz not found or expired</h1>
+        </div>
     </ng-template>
 </div>

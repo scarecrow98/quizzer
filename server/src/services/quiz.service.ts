@@ -1,5 +1,5 @@
-import { User } from "../models";
-import { Quiz } from "../models/quiz.model";
+import { ApiException } from "../core";
+import { Answer, Quiz, QuizQuestion, User } from "../models";
 
 export class QuizService {
 
@@ -38,6 +38,59 @@ export class QuizService {
         return await Quiz.findOne({
             where: {
                 tag
+            },
+            include: [ Quiz.Questions ]
+        });
+    }
+
+    async saveAnswer(userId: number, questionId: number, answer: any) {
+        const question = await QuizQuestion.findOne({ where: { id: questionId } });
+
+        if (!question) {
+            throw new ApiException('Quiz question not found!', 404);
+        }
+
+        if (!answer) {
+            throw new ApiException('Answer cannot be empty!');
+        }
+        //todo: more validation
+        
+        const answerEntity = await Answer.findOne({
+            where: {
+                user_id: userId,
+                question_id: questionId
+            }
+        });
+
+        if (answerEntity) {
+            await answerEntity.update({
+                answer
+            });
+        } else {
+            await Answer.create({
+                answer,
+                user_id: userId,
+                question_id: question.id
+            });
+        }
+    }
+
+    async getQuizUserAnswers(userId: number, quizId: number) {
+        return await QuizQuestion.findAll({
+            attributes: [
+                'id',
+                'type',
+                'choices'
+            ],
+            where: {
+                quiz_id: quizId
+            },
+            include: {
+                association: QuizQuestion.Answers,
+                where: {
+                    user_id: userId
+                },
+                required: false
             }
         });
     }

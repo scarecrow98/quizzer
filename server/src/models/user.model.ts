@@ -1,5 +1,4 @@
 import { Model, DataTypes, Sequelize, HasMany } from 'sequelize';
-import { Quiz } from './quiz.model';
 
 export class User extends Model {
     declare id: number;

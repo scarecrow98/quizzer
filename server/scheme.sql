@@ -21,3 +21,12 @@ CREATE TABLE quiz_questions (
     choices JSON NOT NULL DEFAULT (JSON_ARRAY()),
     FOREIGN KEY (quiz_id) REFERENCES quizes(id) ON DELETE CASCADE
 );
+
+CREATE TABLE answers (
+    user_id INT NOT NULL,
+    question_id INT NOT NULL,
+    answer VARCHAR(100) NOT NULL,
+    FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE,
+    FOREIGN KEY (question_id) REFERENCES questions(id) ON DELETE CASCADE,
+    PRIMARY KEY (user_id, question_id)
+);

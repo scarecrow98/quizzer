@@ -108,6 +108,7 @@ $spacing: 10px;
             cursor: pointer;
             margin-left: 36px;
             position: relative;
+            display: block;
 
             &::before {
                 content: '';
@@ -128,6 +129,21 @@ $spacing: 10px;
 
         & > input[type="radio"]:checked ~ label::before {
             box-shadow: 0px 0px 0px 6px v.$contrast inset;
+        }
+
+        &.hoverable {
+            &:hover {
+                border-radius: 6px;
+                background-color: v.$contrast;
+
+                & > label::before {
+                    box-shadow: 0px 0px 0px 1px v.$font inset;
+                }
+
+                & > input[type="radio"]:checked ~ label::before {
+                    box-shadow: 0px 0px 0px 6px v.$font inset;
+                }
+            }
         }
     }
 }

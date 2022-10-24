@@ -4,12 +4,15 @@ import { QuizRunnerComponent } from './quiz-runner.component';
 import { RouterModule } from '@angular/router';
 import { QuizRunnerService } from './quiz-runner.service';
 import { QuizService } from '../core/services/quiz.service';
+import { QuestionFormComponent } from './question-form/question-form.component';
+import { ReactiveFormsModule } from '@angular/forms';
 
 
 
 @NgModule({
   declarations: [
-    QuizRunnerComponent
+    QuizRunnerComponent,
+    QuestionFormComponent
   ],
   imports: [
     CommonModule,
@@ -22,7 +25,8 @@ import { QuizService } from '../core/services/quiz.service';
         path: '**',
         redirectTo: '/dashboard'
       }
-    ])
+    ]),
+    ReactiveFormsModule
   ],
   providers: [
     QuizRunnerService,

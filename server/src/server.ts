@@ -7,10 +7,16 @@ import { Application, DB } from './core';
 //controller
 import { AuthController, QuizController } from './controllers';
 import { GoogleAuthService, TestService, AuthService, QuizService } from './services';
-import { initUserModel, User } from './models';
-import { initQuizModel, Quiz } from './models/quiz.model';
-import { initQuizQuestionModel, QuizQuestion } from './models/quiz-question.model';
-
+import {
+    initUserModel,
+    User,
+    initQuizModel,
+    Quiz,
+    initQuizQuestionModel,
+    QuizQuestion,
+    initAnswerModel,
+    Answer
+} from './models';
 
 let port = 3000;
 if (process.env.PORT) {
@@ -38,11 +44,14 @@ app.registerControllers([
 initUserModel(DB);
 initQuizModel(DB);
 initQuizQuestionModel(DB);
+initAnswerModel(DB);
 User.Quizes = User.hasMany(Quiz, { foreignKey: 'created_by', sourceKey: 'id', as: 'quizes' });
 Quiz.User = Quiz.belongsTo(User, { foreignKey: 'created_by', targetKey: 'id', as: 'user' });
 Quiz.Questions = Quiz.hasMany(QuizQuestion, { foreignKey: 'quiz_id', sourceKey: 'id', as: 'questions' });
 QuizQuestion.Quiz = QuizQuestion.belongsTo(Quiz, { foreignKey: 'quiz_id', targetKey: 'id', as: 'quiz' });
-
+QuizQuestion.Answers = QuizQuestion.hasMany(Answer, { foreignKey: 'question_id', sourceKey: 'id', as: 'answers' });
+Answer.User = Answer.belongsTo(User, { foreignKey: 'user_id', targetKey: 'id', as: 'user' });
+Answer.QuizQuestion = Answer.belongsTo(QuizQuestion, { foreignKey: 'question_id', targetKey: 'id', as: 'question' });
 
 
 app.start(() => {

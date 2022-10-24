@@ -1,6 +1,5 @@
 import { Response } from "express";
-import { auth } from "google-auth-library";
-import { AuthenticatedRequest, BaseController, Controller, Get, Post } from "../core";
+import { ApiException, AuthenticatedRequest, BaseController, Controller, Get, Post } from "../core";
 import { QuizService } from "../services";
 
 @Controller('/quiz')
@@ -34,5 +33,38 @@ export class QuizController extends BaseController {
             return res.json(quiz);
         }
         return res.sendStatus(404);
+    }
+
+    @Post('/answer/save', { auth: true })
+    async saveAnswer(req: AuthenticatedRequest, res: Response) {
+        const { questionId, answer } = req.body;
+        
+        try {
+            await this.container.get(QuizService).saveAnswer(req.user.id, questionId, answer);
+            res.json({
+                status: true
+            });
+        } catch(err) {
+            console.log(err);
+            if (err instanceof ApiException) {
+                res.status(err.getStatus()).json({
+                    status: false,
+                    message: err.getMessage()
+                });
+            } else {
+                res.status(500).json({
+                    status: false,
+                    message: 'Server error'
+                });
+            }
+        }
+    }
+
+    @Get('/answer/user-answers', { auth: true })
+    async getQuizUserAnswers(req: AuthenticatedRequest, res: Response) {
+        const { quizId } = req.query;
+
+        const answers = await this.container.get(QuizService).getQuizUserAnswers(req.user.id, quizId as any);
+        res.send(answers);
     }
 }
