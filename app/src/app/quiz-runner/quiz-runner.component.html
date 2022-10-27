@@ -1,14 +1,18 @@
-<div class="quiz-runner-component" *ngIf="quizResult$ | async as quizResult">
-    <div *ngIf="quizResult.quiz as quiz; else notFound" class="quiz-form p-3">
-        <h1 class="quiz-form__title pb-3">{{ quiz.title }}</h1>
+<div class="quiz-runner-component" *ngIf="vm$ | async as vm">
+    <div class="quiz-form p-3" *ngIf="vm.quiz; else notFound">
+        <h1 class="quiz-form__title pb-3">{{ vm.quiz.title }}</h1>
 
-        <div class="quiz-form__current-question" *ngIf="currentQuestion$ | async as currentQuestion">
+        <ng-container *ngIf="vm.currentQuestion && vm.answers">
+            <div class="quiz-form__current-question" *ngFor="let question of vm.quiz.questions; let i = index"
+                [hidden]="question.id !== vm.currentQuestion.id">
             <app-question-form
-                [question]="currentQuestion"
-                [questionIndex]="currentIndex"
-                [form]="form"
-                (onSubmit)="submit($event)"></app-question-form>
-        </div>
+                [question]="question"
+                [questionIndex]="i"
+                [savedAnswer]="vm.answers[i]?.answers[0]?.answer || null"
+                (onSubmit)="submit(question.id, $event)"></app-question-form>
+            </div>
+        </ng-container>
+
 
         <div class="quiz-form__step-buttons">
             <button class="action-button filled" (click)="advanceQuestionIndex(-1)">

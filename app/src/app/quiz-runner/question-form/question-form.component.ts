@@ -15,12 +15,14 @@ export class QuestionFormComponent implements OnInit {
 
   @Input() questionIndex: number = 0;
 
-  @Output() onSubmit = new EventEmitter<{
-    questionId: number,
-    answer: string
-  }>();
+  @Input()
+  set savedAnswer(value: any) {
+    this.answer = value;
+  }
 
-  @Input() form!: FormGroup;
+  @Output() onSubmit = new EventEmitter<any>();
+
+  answer: any = '';
 
   constructor() { }
 
@@ -28,10 +30,7 @@ export class QuestionFormComponent implements OnInit {
   }
 
   submit() {
-    this.onSubmit.emit({
-      answer: this.form.value.answer,
-      questionId: this.question!.id
-    });
+    this.onSubmit.emit(this.answer);
   }
 
 }

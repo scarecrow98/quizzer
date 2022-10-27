@@ -1,5 +1,5 @@
 <div class="quiz-question-form">
-    <form *ngIf="question" [formGroup]="form">
+    <ng-container *ngIf="question">
         <h2 class="quiz-question-form__question mb-3">
             <span class="question-index">{{ questionIndex + 1 }}.</span>
             {{ question.question }}
@@ -11,7 +11,7 @@
                     <label for="">Your answer here</label>
                     <input
                         [type]="question.type === 'text' ? 'text' : 'number'"
-                        formControlName="answer">
+                        [(ngModel)]="answer">
                 </div>
             </ng-container>
 
@@ -25,7 +25,7 @@
                             type="radio"
                             [id]="'question-' + question.id + '-choice-' + i"
                             [value]="choice"
-                            formControlName="answer">
+                            [(ngModel)]="answer">
                         <label
                             [for]="'question-' + question.id + '-choice-' + i">
                             {{ choice }}
@@ -38,5 +38,5 @@
         <button
             class="action-button filled w-100 mt-3"
             (click)="submit()">submit</button>
-    </form>
+    </ng-container>
 </div>

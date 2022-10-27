@@ -5,7 +5,7 @@ import { RouterModule } from '@angular/router';
 import { QuizRunnerService } from './quiz-runner.service';
 import { QuizService } from '../core/services/quiz.service';
 import { QuestionFormComponent } from './question-form/question-form.component';
-import { ReactiveFormsModule } from '@angular/forms';
+import { FormsModule } from '@angular/forms';
 
 
 
@@ -26,7 +26,7 @@ import { ReactiveFormsModule } from '@angular/forms';
         redirectTo: '/dashboard'
       }
     ]),
-    ReactiveFormsModule
+    FormsModule
   ],
   providers: [
     QuizRunnerService,
