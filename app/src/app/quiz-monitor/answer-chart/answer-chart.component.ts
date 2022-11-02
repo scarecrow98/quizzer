@@ -5,6 +5,7 @@ import { BehaviorSubject } from 'rxjs';
 
 const CHART_OPTIONS: ChartOptions = {
   responsive: true,
+  animation: false,
   plugins: {
     tooltip: {
       enabled: false
@@ -14,6 +15,12 @@ const CHART_OPTIONS: ChartOptions = {
       title: {
         display: false
       },
+    },
+    datalabels: {
+      color: '#fff',
+      font: {
+        size: 20
+      }
     }
   },
   layout: {
@@ -23,7 +30,7 @@ const CHART_OPTIONS: ChartOptions = {
   scales: {
     xAxes: {
       ticks: {
-        display: true
+        display: false,
       }
     },
     yAxes: {
@@ -32,8 +39,7 @@ const CHART_OPTIONS: ChartOptions = {
           size: 16           
         },
         color: '#fff',
-      },
-      type: 'category'
+      }
     }
   }
 }
