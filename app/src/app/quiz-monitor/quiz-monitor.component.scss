@@ -1,0 +1,12 @@
+@use '../../variables' as v;
+
+.quiz-monitor-component {
+    background-color: v.$primary;
+    height: 100vh;
+    overflow-y: auto;
+
+    .chart-container {
+        max-width: 860px;
+        margin: 0px auto;
+    }
+}

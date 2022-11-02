@@ -11,7 +11,7 @@ export class Application {
 
     public readonly port: number;
 
-    private server: express.Express;
+    public readonly server: express.Express;
 
     private controllers: any[] = [];
 

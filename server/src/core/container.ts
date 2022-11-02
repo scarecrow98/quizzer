@@ -2,7 +2,7 @@
 /**
  * https://stackoverflow.com/questions/69299609/map-array-of-values-to-generic-type-in-typescript
  */
-type Constructor<T> = { new(): T }
+type Constructor<T> = { new(...params: any[]): T }
 
 export class Container {
     private services = new Map<any, any>;

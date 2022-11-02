@@ -4,10 +4,11 @@ import { QuizQuestion } from "./quiz-question.model";
 import { User } from "./user.model";
 
 export class Quiz extends Model {
-    declare id: string;
+    declare id: number;
     title!: string;
     created_by!: User;
     create_at!: string;
+    tag!: string;
 
     static User: BelongsTo;
     static Questions: HasMany;

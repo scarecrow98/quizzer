@@ -21,4 +21,8 @@ export class QuizListComponent implements OnInit {
     navigator.clipboard.writeText(link);
   }
 
+  openQuizMonitor(quizTag: string) {
+    window.open(`/quiz-monitor/${quizTag}`, '__blank');
+  }
+
 }

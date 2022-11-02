@@ -1,0 +1,8 @@
+@use '../../../variables' as v;
+
+.answer-chart-component {
+    h2 {
+        color: v.$font;
+        text-align: center;
+    }
+}

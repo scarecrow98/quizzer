@@ -13,6 +13,11 @@ const routes: Routes = [
     path: 'run-quiz',
     loadChildren: () => import('./quiz-runner/quiz-runner.module').then(m => m.QuizRunnerModule),
     canLoad: [ DashboardGuard ]
+  },
+  {
+    path: 'quiz-monitor',
+    loadChildren: () => import('./quiz-monitor/quiz-monitor.module').then(m => m.QuizMonitorModule),
+    canLoad: [ DashboardGuard ]
   }
 ];
 

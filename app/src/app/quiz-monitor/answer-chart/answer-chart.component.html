@@ -1,0 +1,11 @@
+<div class="answer-chart-component mt-4">
+    <h2 class="">{{ _answerStats?.questionText }}</h2>
+
+    <canvas
+        *ngIf="chartData$ | async as chartData"
+        baseChart
+        [data]="chartData"
+        [options]="chartOptions"
+        [type]="'bar'"
+        ></canvas>
+</div>

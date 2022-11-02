@@ -95,6 +95,49 @@ export class QuizService {
         });
     }
 
+    async getQuizAnswerStatsById(quizId: number): Promise<any> {
+        const answers = await QuizQuestion.findAll({
+            attributes: [
+                'id',
+                'question',
+                'type',
+                'choices'
+            ],
+            where: {
+                quiz_id: quizId
+            },
+            include: {
+                association: QuizQuestion.Answers,
+                required: false
+            },
+            raw: true
+        });
+
+        const data: any = {};
+        answers.forEach((question: any) => {
+            if (data[question.id]) {
+                const entry = data[question.id];
+
+                const currentCount = entry.answers[question['answers.answer']] || 0;
+                entry.answers[question['answers.answer']] = currentCount + 1;
+            } else {
+
+                const entry = {
+                    questionId: question.id,
+                    questionText: question.question,
+                    questionType: question.type,
+                    questionChoices: question.choices,
+                    answers: {
+                        [question['answers.answer']]: 1
+                    }
+                }
+                data[question.id] = entry;
+            }
+        });
+
+        return data;
+    }
+
     private async generateQuizTag(): Promise<string> {
         //todo: check for tag existence in db
         const chars = 'ABCDEFGHIJKLMNOPQRSTUVWXYZabcdefghijklmnopqrstuvwxyz0123456789';

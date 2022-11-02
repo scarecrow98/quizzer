@@ -2,11 +2,15 @@
 import * as dotenv from 'dotenv';
 dotenv.config();
 
+//socket things
+import { Server as SocketServer } from 'socket.io';
+import { createServer as http_createServer } from 'http';
+
 import { Application, DB } from './core';
 
 //controller
 import { AuthController, QuizController } from './controllers';
-import { GoogleAuthService, TestService, AuthService, QuizService } from './services';
+import { GoogleAuthService, TestService, AuthService, QuizService, SocketService } from './services';
 import {
     initUserModel,
     User,
@@ -24,12 +28,27 @@ if (process.env.PORT) {
 }
 
 const app = new Application(port);
+const socketHttpServer = http_createServer(app.server);
+const io = new SocketServer(socketHttpServer, {
+    cors: {
+        origin: '*',
+        methods: [ 'GET', 'POST' ]
+    }
+});
 
 //register services
 app.container.register(TestService, new TestService());
 app.container.register(GoogleAuthService, new GoogleAuthService());
 app.container.register(AuthService, new AuthService());
 app.container.register(QuizService, new QuizService());
+app.container.register(
+    SocketService,
+    new SocketService(
+        io,
+        app.container.get(AuthService),
+        app.container.get(QuizService)
+    )
+);
 
 //enable middlewares
 app.setupMiddlewares();
@@ -57,3 +76,7 @@ Answer.QuizQuestion = Answer.belongsTo(QuizQuestion, { foreignKey: 'question_id'
 app.start(() => {
     console.log('Application started on port ' + app.port);
 })
+
+socketHttpServer.listen(4100, () => {
+    console.log('Socket server listening');
+});

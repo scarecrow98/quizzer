@@ -9,6 +9,7 @@ export class QuizQuestion extends Model {
     question!: string;
     type!: 'text' | 'numeric' | 'choice';
     choices!: any;
+    quiz?: Quiz | null;
 
     static Quiz: BelongsTo;
     static Answers: HasMany;

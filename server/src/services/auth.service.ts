@@ -12,7 +12,6 @@ export class AuthService {
             const payload = verifyJwt(token, process.env.JWT_SECRET || 'secret') as any;
             return await User.findOne({ where: { id: payload.id } });
         } catch (err) {
-            console.log(err);
             return Promise.resolve(null);
         }
     }

@@ -1,6 +1,7 @@
 import { Response } from "express";
 import { ApiException, AuthenticatedRequest, BaseController, Controller, Get, Post } from "../core";
-import { QuizService } from "../services";
+import { QuizQuestion } from "../models";
+import { QuizService, SocketService } from "../services";
 
 @Controller('/quiz')
 export class QuizController extends BaseController {
@@ -40,7 +41,19 @@ export class QuizController extends BaseController {
         const { questionId, answer } = req.body;
         
         try {
+
             await this.container.get(QuizService).saveAnswer(req.user.id, questionId, answer);
+
+            const question = await QuizQuestion.findOne({
+                where: {
+                    id: questionId
+                },
+                include: [
+                    QuizQuestion.Quiz
+                ]
+            });
+            await this.container.get(SocketService).updateQuizMonitor(question!.quiz!);
+
             res.json({
                 status: true
             });

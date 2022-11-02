@@ -1,0 +1,11 @@
+<div class="quiz-monitor-component" #container>
+    <div *ngIf="stats$ | async as stats" class="chart-container">
+        <app-answer-chart
+            *ngFor="let stat of stats"
+            [answerStats]="stat"></app-answer-chart>
+
+        <!-- <div style="display: flex;">
+            <button *ngFor="let stat of stats">{{ stat.questionText }}</button>
+        </div> -->
+    </div>
+</div>
