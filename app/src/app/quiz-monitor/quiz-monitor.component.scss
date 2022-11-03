@@ -5,6 +5,12 @@
     height: 100vh;
     overflow-y: auto;
 
+    h1 {
+        color: v.$font;
+        font-size: 1.6rem;
+        text-align: center;
+    }
+
     .chart-container {
         max-width: 860px;
         margin: 0px auto;

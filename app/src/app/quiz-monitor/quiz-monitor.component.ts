@@ -26,6 +26,10 @@ export class QuizMonitorComponent implements OnInit, OnDestroy {
 
   // @ViewChild('container', { static: true }) container!: ElementRef<HTMLDivElement>;
 
+  selectedQuestionId: number = 0;
+
+  quiz$ = this._quiz$.asObservable();
+
   constructor(
     private route: ActivatedRoute,
     private quizService: QuizService,
@@ -36,6 +40,7 @@ export class QuizMonitorComponent implements OnInit, OnDestroy {
     ).subscribe(result => {
       if (result.quiz) {
         this._quiz$.next(result.quiz);
+        this.selectedQuestionId = result.quiz.questions[0].id;
         this._setupSocketConnection(result.quiz);
       } else {
         this.router.navigate([ '/dashboard' ]);
@@ -56,6 +61,10 @@ export class QuizMonitorComponent implements OnInit, OnDestroy {
   updateDiagrams(data: Record<number, AnswerStatEntry>) {
     this.stats$.next(Object.values(data));
     // this.container.nativeElement.scrollIntoView({ block: 'start', behavior: 'smooth' });
+  }
+
+  selectQuestion(questionId: number) {
+    this.selectedQuestionId = questionId;
   }
 
   private _setupSocketConnection(quiz: Quiz) {

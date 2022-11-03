@@ -1,11 +1,22 @@
 <div class="quiz-monitor-component" #container>
+    <h1 *ngIf="quiz$ | async as quiz" class="pt-2 pb-2">
+        {{ quiz.title }}
+    </h1>
+
     <div *ngIf="stats$ | async as stats" class="chart-container">
+        <div class="question-selector mt-2 pl-2 pr-2">
+            <button
+                *ngFor="let stat of stats"
+                (click)="selectQuestion(stat.questionId)"
+                class="action-button w-100 mb-1"
+                [class.filled]="stat.questionId === selectedQuestionId">
+                {{ stat.questionText }}
+            </button>
+        </div>
+
         <app-answer-chart
             *ngFor="let stat of stats"
-            [answerStats]="stat"></app-answer-chart>
-
-        <!-- <div style="display: flex;">
-            <button *ngFor="let stat of stats">{{ stat.questionText }}</button>
-        </div> -->
+            [answerStats]="stat"
+            [hidden]="stat.questionId !== selectedQuestionId"></app-answer-chart>
     </div>
 </div>
